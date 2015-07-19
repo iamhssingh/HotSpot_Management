@@ -1,24 +1,43 @@
 __author__ = 'iamhssingh'
+"""
+Main file that runs everything
+"""
 
-
+# Import classes
 from Compo.preset import *
+
+# Import file that runs cmd commands
 import Compo.cmdset as cmd
+
+# Import messagebox widget
 from tkinter import messagebox
+
+# Import partial to send functions with argument as command
 from functools import partial
 
 
+# Create a main window
 a = Form(475, 300, "HotSpot Management by Himanshu Shankar")
+# Create some variables for future purpose
 data = StringVar()
 status = IntVar()
-status.set(2)
 
 
 def refresh_more():
+    """
+    This function fetches info of all the network connectivity and displays IP address with MAC Address
+    and their Status(Dyanamic/Static) in a tkinter Messagebox of type Info!
+    :return:
+    """
     x = cmd.getmoreinfo()
     messagebox.showinfo(title="HotSpot More Details", message=x)
 
 
 def help_me():
+    """
+    This fucntion generates a Info Messagebox which displays some info and help on how to use this software.
+    :return:
+    """
     help_me_text = "This application is created by Himanshu Shankar." \
                    "\n---------------------------------------------------------------------\n" \
                    "Please make sure following points are positive: \n" \
@@ -55,6 +74,11 @@ def help_me():
 
 
 def refresh():
+    """
+    This function changes the status of Buttons: Start HotSpot, Stop HotSpot and Setting and also changes
+    the content of variable 'data' which in turn changes the label that displays detail of hotspot.
+    :return:
+    """
     x = cmd.getinfo()
     data.set(x[1])
     status.set(x[0])
@@ -73,6 +97,10 @@ def refresh():
 
 
 def cntrl_hotspot(val=0):
+    """
+    This fucntions "Starts" and "Stops" the hotspot!
+    :return:
+    """
     x = 0
     if val == 1:
         x = cmd.start()
@@ -91,6 +119,10 @@ def cntrl_hotspot(val=0):
 
 
 def quitx(h=None):
+    """
+    This function facilitate Quiting of GUI Shells.
+    :return:
+    """
     cnfrm = messagebox.askyesno(title="Quit?", message="Are you sure you want to quit?")
     if cnfrm > 0:
         if h is not None:
@@ -102,6 +134,10 @@ def quitx(h=None):
 
 
 def settings():
+    """
+    This function is setting window function that is used to configure hotspot!
+    :return:
+    """
     set_button['state'] = DISABLED
     setwin = TL(235, 120, "Setting for HotSpot Management")
     ssid_name = StringVar(master=setwin)
@@ -113,6 +149,12 @@ def settings():
     addEntry(setfrm, 1, 1, ssid_pwd)
 
     def change(name, pwd):
+        """
+        Changes Name and Password of hotspot.
+        :param name: Name of HotSpot
+        :param pwd: Password of HotSpot
+        :return:
+        """
         cmd.stop()
         z = cmd.changehotspot(name, pwd)
         if z[0] == 0:
@@ -147,19 +189,28 @@ def settings():
     addButton(setfrm, 2, 0, "Cancel", command=partial(quitx, setwin))
     setwin.protocol("WM_DELETE_WINDOW", partial(quitx, setwin))
 
+# Background colors to be used in frames. bgcolor: frame1, bgcolor1: frame2
 bgcolor = 'darkorchid4'
 bgcolor1 = "white"
 
+# Frame1: Contains a Scroll Window b
 frame1 = a.addFrame(width=195, fill=BOTH)
 frame1.propagate(0)
+
+# B: Scroll Window that contains control buttons
 b = a.addscroll(master=frame1)
 
+# Frame2: Contains Scroll Window c
 frame2 = a.addFrame(fill=BOTH)
+
+# c: Scroll Window that contains HotSpot Status and Setting button!
 c = a.addscroll(master=frame2)
 
+# Sets bgcolor of b and c.
 b['bg'] = bgcolor
 c['bg'] = bgcolor1
 
+# Contents of b and c
 addLabel(b, 0, 1, "Controls of HotSpot", bg=bgcolor, fg="white", font=("Times New Roman", 12, "bold underline italic"))
 addLabel(b, 1, 1, "            ", bg=bgcolor, fg="white")
 addLabel(b, 0, 0, "     ", bg=bgcolor, fg="white")
@@ -185,8 +236,11 @@ set_button = addButton(c, 3, 1, "Settings", command=settings, bg="red", fg="whit
 info_label = addLabel(c, 2, 1, data.get(), bg=bgcolor1, fg='blue', font=("Times New Roman", 9, "bold"))
 info_label['textvariable'] = data
 
+# Event binding upon initiating close of window
 a.protocol("WM_DELETE_WINDOW", quitx)
 
+# Refresh to get content of HotSpot detial variable: 'data' and change status of buttons
 refresh()
 
+# Runs main window
 a.mainloop()
