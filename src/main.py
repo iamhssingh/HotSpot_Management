@@ -15,6 +15,17 @@ from tkinter import messagebox
 # Import partial to send functions with argument as command
 from functools import partial
 
+#put all constants at top
+ssidmessage="Error! Couldn't change SSID! Please check "
+                                                                        "SSID NAME RULES or contact Creator!\nMAKE "
+                                                                        "SURE YOU ARE RUNNING PROGRAM AS "
+                                                                        "ADMINISTRATOR!"
+passwordmessage="Error! Couldn't change PASSWORD!\n1. IS "
+                                                                        "PASSWORD 8 digit long?\n2. ARE YOU "
+                                                                        "FOLLOWING PASSWORD RULES AS PER YOUR "
+                                                                        "AUTHENTICATION SYSTEM?\nPLEASE GOOGLE \""
+                                                                        "Can't change wifi password hostednetwork\""
+                                                                        " or contact CREATOR!"
 
 # Create a main window
 a = Form(475, 300, "HotSpot Management by Himanshu Shankar")
@@ -72,15 +83,7 @@ def help_me():
                    "Thanks for using this!\n Please report bugs asap, if any!"
     messagebox.showinfo(title="Help Me ^.^", message=help_me_text)
 
-
-def refresh():
-    """
-    This function changes the status of Buttons: Start HotSpot, Stop HotSpot and Setting and also changes
-    the content of variable 'data' which in turn changes the label that displays detail of hotspot.
-    :return:
-    """
-    x = cmd.getinfo()
-    data.set(x[1])
+Def checkStatus():
     status.set(x[0])
     if status.get() == 0:
         start['state'] = NORMAL
@@ -96,6 +99,17 @@ def refresh():
         stop['state'] = NORMAL
 
 
+
+def refresh():
+    """
+    This function changes the status of Buttons: Start HotSpot, Stop HotSpot and Setting and also changes
+    the content of variable 'data' which in turn changes the label that displays detail of hotspot.
+    :return:
+    """
+    x = cmd.getinfo()
+    data.set(x[1])
+    CheckStatus()
+    
 def cntrl_hotspot(val=0):
     """
     This fucntions "Starts" and "Stops" the hotspot!
@@ -164,19 +178,11 @@ def settings():
             setwin.destroy()
             refresh()
         if z[1] == 0:
-            messagebox.showerror(master=setwin, title="Error!", message="Error! Couldn't change SSID! Please check "
-                                                                        "SSID NAME RULES or contact Creator!\nMAKE "
-                                                                        "SURE YOU ARE RUNNING PROGRAM AS "
-                                                                        "ADMINISTRATOR!")
+            messagebox.showerror(master=setwin, title="Error!", ssidmessage)
             setwin.destroy()
             refresh()
         if z[2] == 0:
-            messagebox.showerror(master=setwin, title="Error!", message="Error! Couldn't change PASSWORD!\n1. IS "
-                                                                        "PASSWORD 8 digit long?\n2. ARE YOU "
-                                                                        "FOLLOWING PASSWORD RULES AS PER YOUR "
-                                                                        "AUTHENTICATION SYSTEM?\nPLEASE GOOGLE \""
-                                                                        "Can't change wifi password hostednetwork\""
-                                                                        " or contact CREATOR!")
+            messagebox.showerror(master=setwin, title="Error!", passwordmessage)
             setwin.destroy()
             refresh()
         else:
