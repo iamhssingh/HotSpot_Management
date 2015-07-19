@@ -1,6 +1,13 @@
 # HotSpot_Management
 I have created a GUI interface for managing HotSpot.
 
+
+Files:-
+  1. bin/HotSpotManagement_v5_64bit.exe :- This program will extract a folder to your specified location which contails EXECUTABLE FILES of this project that can be run on Windows 64 bit.
+  2. bin/HotSpotManagement_v5_32bit.exe :- This program will extract a folder to your specified location which contails EXECUTABLE FILES of this project that can be run on Windows 32 bit. (COMMING SOON.. LIKE IN FEW HOURS)
+  3. src :- Contains source code (.py)
+  4. src/setup.py :- This can be used to create a "Executable" by running setup.py py2exe in cmd!
+
 Requirements:-
 
   1. OS :- Windows Vista/+
