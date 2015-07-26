@@ -23,6 +23,16 @@ data = StringVar()
 status = IntVar()
 
 
+allowerror = "Error! Couldn't set HOSTEDNETWORK to ALLOW! Please contact creator!\n " \
+                  "MAKE SURE YOU ARE RUNNING PROGRAM AS ADMINISTRATOR!"
+ssiderror = "Error! Couldn't change SSID! Please check SSID NAME RULES or contact Creator!\n" \
+            "MAKE SURE YOU ARE RUNNING PROGRAM AS ADMINISTRATOR!"
+pwderror = "Error! Couldn't change PASSWORD!\n1. IS PASSWORD 8 digit long?\n" \
+           "2. ARE YOU FOLLOWING PASSWORD RULES AS PER YOUR AUTHENTICATION SYSTEM?\n" \
+           "PLEASE GOOGLE \"Can't change wifi password hostednetwork\" or contact CREATOR!"
+success = "SSID and PASSWORD of WiFi HotSpot Changed successfully!"
+
+
 def refresh_more():
     """
     This function fetches info of all the network connectivity and displays IP address with MAC Address
@@ -158,30 +168,19 @@ def settings():
         cmd.stop()
         z = cmd.changehotspot(name, pwd)
         if z[0] == 0:
-            messagebox.showerror(master=setwin, title="Error!", message="Error! Couldn't set HOSTEDNETWORK to "
-                                                                        "ALLOW! Please contact creator!\nMAKE SURE "
-                                                                        "YOU ARE RUNNING PROGRAM AS ADMINISTRATOR!")
+            messagebox.showerror(master=setwin, title="Error!", message=allowerror)
             setwin.destroy()
             refresh()
         if z[1] == 0:
-            messagebox.showerror(master=setwin, title="Error!", message="Error! Couldn't change SSID! Please check "
-                                                                        "SSID NAME RULES or contact Creator!\nMAKE "
-                                                                        "SURE YOU ARE RUNNING PROGRAM AS "
-                                                                        "ADMINISTRATOR!")
+            messagebox.showerror(master=setwin, title="Error!", message=ssiderror)
             setwin.destroy()
             refresh()
         if z[2] == 0:
-            messagebox.showerror(master=setwin, title="Error!", message="Error! Couldn't change PASSWORD!\n1. IS "
-                                                                        "PASSWORD 8 digit long?\n2. ARE YOU "
-                                                                        "FOLLOWING PASSWORD RULES AS PER YOUR "
-                                                                        "AUTHENTICATION SYSTEM?\nPLEASE GOOGLE \""
-                                                                        "Can't change wifi password hostednetwork\""
-                                                                        " or contact CREATOR!")
+            messagebox.showerror(master=setwin, title="Error!", message=pwderror)
             setwin.destroy()
             refresh()
         else:
-            messagebox.showinfo(master=setwin, title="Succes", message="SSID and PASSWORD of WiFi HotSpot Changed "
-                                                                       "successfully!")
+            messagebox.showinfo(master=setwin, title="Succes", message=success)
             setwin.destroy()
             refresh()
 
